@@ -6,7 +6,6 @@ const UserController = require("../controllers/UserController")
 const userController = new UserController()
 
 function testMiddleware(req, res, next) {
-    console.log("Passou pelo middleware")
 
     if (!req.body.isAdmin) {
         return res.json({ message: "user unauthorized" })
