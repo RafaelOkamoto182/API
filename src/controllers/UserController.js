@@ -10,9 +10,15 @@ class UserController {
     */
 
     create(req, res) {
-        const { name, email, password } = req.body
+        const { name, email, password, isAdmin } = req.body
 
-        res.json({ name, email, password })
+        res.status(201).json({ name, email, password, isAdmin })
+    }
+
+    getUsers(req, res) {
+        const { page, limit } = req.query
+
+        res.status(200).send(`Pagina: ${page}. Limite de usuarios: ${limit}`)
     }
 }
 
