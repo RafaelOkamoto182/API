@@ -2,7 +2,7 @@ const AppError = require("./utils/AppError")
 
 const express = require('express')
 
-const database = require('./database/sqlite')
+const runMigrations = require('./database/sqlite/migrations')
 
 //Quando nao especifica nenhum arquivo dentro da pasta, ele ja procura algum com nome de "index"
 const routesRouter = require("./routes")
@@ -11,7 +11,7 @@ const app = express()
 //Define em qual formato as requisições vao vir. Sem isso dá erro na hora de fazer os post etc, só funcionaria os GET
 app.use(express.json())
 
-database()
+runMigrations()
 
 app.use(routesRouter)
 
@@ -35,7 +35,6 @@ app.use((error, req, res, next) => {
     }
 
     console.error(error)
-
 
     return res.status(500).json({
         status: "error",
