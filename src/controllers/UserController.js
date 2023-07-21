@@ -1,4 +1,5 @@
 const AppError = require('../utils/AppError')
+const sqliteConnection = require("../database/sqlite")
 
 class UserController {
     /* 
@@ -11,14 +12,19 @@ class UserController {
         Nessa arquitetura, caso a classe precise de mais de 5 métodos, provavelmente faz sentido criar um novo controller pra ela.
     */
 
-    create(req, res) {
-        const { name, email, password, isAdmin } = req.body
+    async create(req, res) {
+        const { name, email, password } = req.body
 
-        if (!name) {
-            throw new AppError("Nome é obrigatorio")
+        const db = await sqliteConnection()
+        const emailAlreadyUsed = await db.get("SELECT * FROM users WHERE email = (?)", [email])
+
+        if (emailAlreadyUsed) {
+            throw new AppError("Email já utilizado")
         }
 
-        res.status(201).json({ name, email, password, isAdmin })
+        db.run("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", [name, email, password])
+
+        return res.status(201).json()
     }
 
     getUsers(req, res) {

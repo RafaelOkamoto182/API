@@ -7,9 +7,9 @@ const userController = new UserController()
 
 function testMiddleware(req, res, next) {
 
-    if (!req.body.isAdmin) {
-        return res.json({ message: "user unauthorized" })
-    }
+    /*  if (!req.body.isAdmin) {
+         return res.json({ message: "user unauthorized" })
+     } */
 
     next()
 }
