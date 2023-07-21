@@ -1,15 +1,17 @@
-const AppError = require("./utils/AppError")
+import "express-async-errors"
 
-const express = require('express')
+import AppError from "./utils/AppError"
 
-const runMigrations = require('./database/sqlite/migrations')
+import express, { json } from 'express'
+
+import runMigrations from './database/sqlite/migrations'
 
 //Quando nao especifica nenhum arquivo dentro da pasta, ele ja procura algum com nome de "index"
-const routesRouter = require("./routes")
+import routesRouter from "./routes"
 
 const app = express()
 //Define em qual formato as requisições vao vir. Sem isso dá erro na hora de fazer os post etc, só funcionaria os GET
-app.use(express.json())
+app.use(json())
 
 runMigrations()
 
