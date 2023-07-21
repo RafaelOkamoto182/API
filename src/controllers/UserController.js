@@ -1,4 +1,4 @@
-const AppError = require('../utils/AppError')
+const AppError = require('../utils/AppError').default
 const { hash } = require('bcryptjs')
 const sqliteConnection = require("../database/sqlite")
 
