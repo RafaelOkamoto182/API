@@ -27,6 +27,8 @@ app.use(routesRouter)
     instanceOf: chega se o error capturado é uma instancia da classe AppError criada na pasta utils. Esse erro é lançado lá no UserController.
         Em outras palavras, naquele if está checando se o erro é um erro da parte do cliente, uma requisicao errada que o cliente tenha feito.
         Depois disso vem uma resposta padrao, que seria um erro de servidor.
+    
+    Essa é uma funcao de custom error handling. É um middleware, equivalente a fazer: function ErrorHandling(err,req,res,next){} e depois usar app.use(ErrorHandling)
 */
 app.use((error, req, res, next) => {
     if (error instanceof AppError) {

@@ -20,5 +20,6 @@ function testMiddleware(req, res, next) {
 userRouter.get("/", userController.getUsers)
 
 userRouter.post("/", testMiddleware, userController.create)
+userRouter.put("/:id", userController.update)
 
 module.exports = userRouter

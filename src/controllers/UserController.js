@@ -30,6 +30,37 @@ class UserController {
         return res.status(201).json()
     }
 
+    async update(req, res) {
+        const { name, email } = req.body
+        const { id } = req.params
+
+        const db = await sqliteConnection()
+        const user = await db.get("SELECT * FROM users WHERE id = (?)", [id])
+
+        if (!user) {
+            throw new AppError("User not found")
+        }
+
+        const userWithNewGivenEmail = await db.get("SELECT * FROM users WHERE email = (?)", [email])
+
+        if (userWithNewGivenEmail && userWithNewGivenEmail.id !== user.id) {
+            throw new AppError("Email already in use")
+        }
+
+        await db.run(`
+        UPDATE users SET
+        name = ?,
+        email = ?,
+        updated_at = ?
+        WHERE 
+        id = ?`,
+            [name, email, new Date(), id]
+        )
+
+        return res.json()
+    }
+
+
     getUsers(req, res) {
         const { page, limit } = req.query
 
