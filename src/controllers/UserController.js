@@ -47,6 +47,10 @@ class UserController {
             throw new AppError("Email already in use")
         }
 
+        //nullish operator: se existir o primeiro, será o primeiro. Senao será o segundo
+        user.name = name ?? user.name
+        user.email = email ?? user.email
+
         if (password && !old_password) {
             throw new AppError("You need to provide the old password in order to change password")
         }
