@@ -1,4 +1,4 @@
-const AppError = require('../utils/AppError').default
+const AppError = require('../utils/AppError')
 const { hash, compare } = require('bcryptjs')
 const sqliteConnection = require("../database/sqlite")
 
@@ -66,10 +66,10 @@ class UserController {
         name = ?,
         email = ?,
         password =?,
-        updated_at = ?
+        updated_at = DATETIME('now')
         WHERE 
         id = ?`,
-            [name, email, user.password, new Date(), id]
+            [name, email, user.password, id]
         )
 
         return res.json()
