@@ -33,6 +33,20 @@ class NoteController {
 
         return res.json()
     }
+
+    async getById(req, res) {
+        const { id } = req.params
+
+        const note = await knex('notes').where({ id }).first()
+        const tags = await knex('tags').where({ note_id: id }).orderBy('name')
+        const links = await knex('links').where({ note_id: id }).orderBy('created_at')
+
+        return res.json({
+            ...note,
+            tags,
+            links
+        })
+    }
 }
 
 module.exports = NoteController

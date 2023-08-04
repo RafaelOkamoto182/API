@@ -7,5 +7,6 @@ const noteController = new NoteController()
 
 
 noteRouter.post("/:user_id", noteController.create)
+noteRouter.get("/:id", noteController.getById)
 
 module.exports = noteRouter
