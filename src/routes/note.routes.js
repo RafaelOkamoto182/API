@@ -2,7 +2,7 @@ const { Router } = require("express")
 
 const noteRouter = Router()
 
-const NoteController = require("../controllers/noteController")
+const NoteController = require("../controllers/NoteController")
 const noteController = new NoteController()
 
 
