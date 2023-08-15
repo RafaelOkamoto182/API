@@ -1,25 +1,15 @@
-const { Router, json } = require("express")
+const { Router } = require("express")
 
 const userRouter = Router()
 
 const UserController = require("../controllers/UserController")
+const certifyAuthenticated = require("../middlewares/certifyAuthenticated")
 const userController = new UserController()
-
-function testMiddleware(req, res, next) {
-
-    /*  if (!req.body.isAdmin) {
-         return res.json({ message: "user unauthorized" })
-     } */
-
-    next()
-}
-
-
 
 //query params: os valores NAO SAO OBRIGATORIOS. Se nao passar nada os valores vao como undefined
 userRouter.get("/", userController.getUsers)
 
-userRouter.post("/", testMiddleware, userController.create)
-userRouter.put("/:id", userController.update)
+userRouter.post("/", userController.create)
+userRouter.put("/", certifyAuthenticated, userController.update)
 
 module.exports = userRouter
