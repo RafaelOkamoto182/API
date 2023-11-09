@@ -20,11 +20,11 @@ class DiskStorage {
         const filePath = path.resolve(uploadConfig.UPLOADS_FOLDER, file)
 
         try {
+            //cuida se o arquivo está aberto por outro programa, está corrompido, se está disponível etc.
+            //Se o arquivo nao estiver disponível pra mudar de lugar, vai ali pro catch (dar uma olhada melhor nisso)
             await fs.promises.stat(filePath)
-
         } catch {
             return
-
         }
 
         await fs.promises.unlink(filePath)
