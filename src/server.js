@@ -3,6 +3,7 @@ const AppError = require("./utils/AppError")
 const express = require("express")
 const runMigrations = require('./database/sqlite/migrations')
 const uploadConfig = require('../src/configs/upload')
+const cors = require('cors')
 
 runMigrations()
 
@@ -15,6 +16,7 @@ app.use(express.json())
 
 //usado para servir os arquivos estaticos (no caso, imagens)
 app.use('/files', express.static(uploadConfig.UPLOADS_FOLDER))
+app.use(cors())
 
 
 app.use(routesRouter)
