@@ -1,10 +1,10 @@
 require("express-async-errors")
-
 const AppError = require("./utils/AppError")
-
 const express = require("express")
-
 const runMigrations = require('./database/sqlite/migrations')
+const uploadConfig = require('../src/configs/upload')
+
+runMigrations()
 
 //Quando nao especifica nenhum arquivo dentro da pasta, ele ja procura algum com nome de "index"
 const routesRouter = require("./routes")
@@ -13,7 +13,9 @@ const app = express()
 //Define em qual formato as requisições vao vir. Sem isso dá erro na hora de fazer os post etc, só funcionaria os GET
 app.use(express.json())
 
-runMigrations()
+//usado para servir os arquivos estaticos (no caso, imagens)
+app.use('/files', express.static(uploadConfig.UPLOADS_FOLDER))
+
 
 app.use(routesRouter)
 
