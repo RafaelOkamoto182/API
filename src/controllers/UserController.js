@@ -20,7 +20,7 @@ class UserController {
         const emailAlreadyUsed = await db.get("SELECT * FROM users WHERE email = (?)", [email])
 
         if (emailAlreadyUsed) {
-            throw new AppError("Email já utilizado")
+            throw new AppError("E-mail already in use")
         }
 
         const hashedPassword = await hash(password, 8)
